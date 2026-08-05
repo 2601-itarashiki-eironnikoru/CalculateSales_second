@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CalculateSales {
@@ -38,7 +40,24 @@ public class CalculateSales {
 
 		// ※ここから集計処理を作成してください。(処理内容2-1、2-2)
 
+		//listFilesを使⽤してfilesという配列に、
+	    //指定したパスに存在する全てのファイル(または、ディレクトリ)の情報を格納します
+		File[] files = new File(args[0]).listFiles();
 
+		//先にファイルの情報を格納する List(ArrayList) を宣言します。
+		List<File> rcdFile = new ArrayList<>();
+
+		//filesの数だけ繰り返すことで、
+		//指定したパスに存在する全てのファイル(または、ディレクトリ)の数だけ繰り返されます。
+		for(int i =0; i < files.length ; i++) {
+			//files[i].getName() でファイル名が取得できます。
+			String filesName= files[i].getName();
+					//matches を使用してファイル名が「数字8桁.rcd」なのか判定します。
+			if(files[1].isFile() && fileName.matches("\\d{8}\\.rcd")) {
+				//売上ファイルの条件に当てはまったものだけ、List(ArrayList)に追加します。
+				rcdFiles.add(files[i]);
+			}
+		}
 
 		// 支店別集計ファイル書き込み処理
 		if(!writeFile(args[0], FILE_NAME_BRANCH_OUT, branchNames, branchSales)) {
