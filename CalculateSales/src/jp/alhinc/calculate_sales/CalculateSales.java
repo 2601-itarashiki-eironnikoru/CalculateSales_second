@@ -54,14 +54,13 @@ public class CalculateSales {
 		//指定したパスに存在する全てのファイル(または、ディレクトリ)の数だけ繰り返されます。
 		for(int i =0; i < files.length ; i++) {
 			//files[i].getName() でファイル名が取得できます。
-			String fileName= files[i].getName();
+			String fileName = files[i].getName();
 					//matches を使用してファイル名が「数字8桁.rcd」なのか判定します。
 			if(files[i].isFile() && fileName.matches("\\d{8}\\.rcd")) {
 				//売上ファイルの条件に当てはまったものだけ、List(ArrayList)に追加します。
 				rcdFiles.add(files[i]);
 			}
 		}
-
 
 		//rcdFilesに複数の売上ファイルの情報を格納しているので、その数だけ繰り返します。
 		BufferedReader br = null;
@@ -77,16 +76,17 @@ public class CalculateSales {
 				ArrayList<String> elementsList = new ArrayList<String>();
 				while((line = br.readLine()) != null) {
 					elementsList.add(line);
-				}
 
+				}
 
 				String branchCode = elementsList.get(0);
 
-				//売上ファイルから読み込んだ売上金額をMapに加算していくために、型の変換を行います。
+				//足し算
 				long fileSale = Long.parseLong(elementsList.get(1));
-
-				//読み込んだ売上金額を加算します。
 				long saleAmount = branchSales.get(branchCode) + fileSale;
+
+				//足し算し終わった結果をマップに格納(put)
+				branchSales.put(branchCode, saleAmount);
 
 			} catch(IOException e) {
 				System.out.println(UNKNOWN_ERROR);
